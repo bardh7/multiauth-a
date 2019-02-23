@@ -1,6 +1,7 @@
 <?php
 
 
+
 Route::prefix(vega_auth()->guard()->prefix())->group(function () {
 
     // Login

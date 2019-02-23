@@ -18,6 +18,9 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         $guard = vega_auth()->guard()->name();
+        
+         auth()->setDefaultDriver($guard);
+ 
 
         if (Auth::guard($guard)->check()) {
             return redirect(vega_auth()->guard()->redirectAfterLogin());

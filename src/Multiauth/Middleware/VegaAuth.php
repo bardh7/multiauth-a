@@ -22,6 +22,7 @@ class VegaAuth
 
         $redirect = vega_auth()->guard()->prefix();
         $currentGuard = vega_auth()->guard()->name();
+        
 
         auth()->setDefaultDriver($currentGuard);
 

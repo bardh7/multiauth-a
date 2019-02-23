@@ -13,6 +13,12 @@ use Autoluminescent\Multiauth\Middleware\RedirectIfAuthenticated;
 class MultiAuthServiceProvider extends ServiceProvider
 {
     protected $config = [];
+    
+	protected $helpers = [
+        __DIR__.'/Helpers/MultiAuthHelper.php'
+    ];
+    
+    
 
     public function __construct($app)
     {
@@ -33,6 +39,7 @@ class MultiAuthServiceProvider extends ServiceProvider
      */
     public function register()
     {
+		$this->registerHelpers();
         $this->mergeConfigFrom(__DIR__.'/../publishable/config/config.php', 'multiauth');
         $this->config = config('multiauth');
         $this->registerAuthGuard();
@@ -67,6 +74,20 @@ class MultiAuthServiceProvider extends ServiceProvider
             __DIR__.'/../Multiauth/Views/' => resource_path('views/vendor/multiauth'),
         ]);
 
+    }
+    
+    
+    /**
+     * Register package helpers
+     */
+    public function registerHelpers()
+    {
+        foreach ($this->helpers as $helper) {
+
+            if (file_exists($helper)) {
+                require_once($helper);
+            }
+        }
     }
 
     /**
