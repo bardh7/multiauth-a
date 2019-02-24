@@ -16,6 +16,23 @@ class AuthManager
 
     protected $guardDomain;
 
+    protected $views = [
+        'layout' => 'multiauth::layouts.auth',
+        'register' => 'multiauth::register',
+        'login' => 'multiauth::login',
+        'passwords.email' => 'multiauth::passwords.email',
+        'passwords.reset' => 'multiauth::passwords.reset',
+    ];
+
+    protected $routes = [
+        'login' => 'multiauth.login',
+        'logout' => 'multiauth.logout',
+        'register' => 'multiauth.register',
+        'password.email' => 'multiauth.password.email',
+        'password.request' => 'multiauth.password.request',
+        'password.reset' => 'multiauth.password.reset',
+    ];
+
     public function __construct($app)
     {
         $this->app = $app;
@@ -37,14 +54,6 @@ class AuthManager
     {
         $guards = [];
 
-        $views = [
-            'layout' => 'multiauth::layouts.auth',
-            'register' => 'multiauth::register',
-            'login' => 'multiauth::login',
-            'passwords.email' => 'multiauth::passwords.email',
-            'passwords.reset' => 'multiauth::passwords.reset',
-        ];
-
         foreach ($this->app['config']['multiauth']['guards'] as $key => $guard) {
 
             Route::aliasMiddleware($key.'.auth', Authenticate::class);
@@ -53,9 +62,9 @@ class AuthManager
             $guard['name'] = $key;
 
             if (isset($guard['views'])) {
-                $guard['views'] = array_merge($views, $guard['views']);
+                $guard['views'] = array_merge($this->views, $guard['views']);
             } else {
-                $guard['views'] = $views;
+                $guard['views'] = $this->views;
             }
             $guards[$guard['domain'] == '' ? 'web' : $guard['domain']] = $guard;
 
@@ -110,12 +119,10 @@ class AuthManager
         return $this->currentGuard['name'];
     }
 
-
     public function guestMiddleware()
     {
-        return $this->currentGuard['name'] . ".guest";
+        return $this->currentGuard['name'].".guest";
     }
-
 
     public function domain()
     {
@@ -132,8 +139,6 @@ class AuthManager
         return $this->currentGuard['allow_registration'];
     }
 
-
-
     public function userModel()
     {
         return $this->currentGuard['user_model'];
@@ -141,7 +146,7 @@ class AuthManager
 
     public function redirectAfterLogin()
     {
-        return $this->currentGuard['refirect_after_login'];
+        return $this->currentGuard['redirect_after_login'];
     }
 
     public function resetPasswordUrl($token)
@@ -156,5 +161,23 @@ class AuthManager
         }
 
         return false;
+    }
+
+    public function route($name)
+    {
+        if (Route::has($this->routes[$name])) {
+            return route($this->routes[$name]);
+        }
+
+        return null;
+    }
+
+    public function routeName($name)
+    {
+        if (isset($this->routes[$name])) {
+            return $this->routes[$name];
+        }
+
+        return null;
     }
 }

@@ -99,7 +99,7 @@ return [
             | Example: http://example.test/auth
             */
             'prefix' => 'auth',
-            'refirect_after_login' => '/home',
+            'redirect_after_login' => '/home',
             'guard_driver' => 'session',
             'provider_driver' => 'eloquent',
             'user_model' => \Autoluminescent\Multiauth\User::class,
@@ -112,7 +112,7 @@ return [
         'admin' => [
             'domain' => 'admin',
             'prefix' => 'admin/auth',
-            'refirect_after_login' => '/admin',
+            'redirect_after_login' => '/admin',
             'guard_driver' => 'session',
             'provider_driver' => 'eloquent',
             'user_model' => \Autoluminescent\Multiauth\User::class,
