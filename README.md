@@ -135,8 +135,6 @@ return [
 ```
 
 
-.
-
-I will setup a demo project soon...
+To see it in acntio, check out the demo repository here: [Laravel Multiauth Demo](https://github.com/bardh7/multiauth).
 
 
