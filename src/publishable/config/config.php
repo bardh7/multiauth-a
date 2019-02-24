@@ -45,7 +45,7 @@ return [
         'admin' => [
             'domain' => 'admin',
             'prefix' => 'admin/auth',
-            'redirect_after_login' => '/admin',
+            'redirect_after_login' => '/admin/dashboard',
             'guard_driver' => 'session',
             'provider_driver' => 'eloquent',
             'user_model' => \Autoluminescent\Multiauth\User::class,
