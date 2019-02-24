@@ -54,6 +54,7 @@ return [
             'allow_registration' => false,
             'views' => [
                 'layout' => 'multiauth::layouts.auth',
+                'login' => 'multiauth::login',
             ],
         ],
 

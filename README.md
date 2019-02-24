@@ -18,33 +18,125 @@ Once Composer is done, run the following command:
 php artisan multiauth:install
 ```
 
-By default, `config/multiauth.php` contains web and admin guards defined.
+Guards are handled based on defined guards on  `config/multiauth.php` and first URI segment.
+If the match is found, we set the Auth Default driver to the ‘matched guard’, else we set the default driver to ‘web’.
 
-The web guard is a default guard and should be not removed, bacause it servers as a fallback and a default guard.
-It is prety much like Laravels default auth guard.
-Default web auth routes are as following:
+
+By default, `config/multiauth.php` ships with ‘web’ and ‘admin’ guards.
+
+
+### Web guard
+
+The ‘web’ guard is considered as a default or a fallback guard, when no other matches are found/defined.
+It is pretty much like Laravel's default auth guard.
+
+Default ‘web’ auth routes are as following:
 
 - http://example.test/auth/login
+- http://example.test/auth/logout
+- http://example.test/auth/password/email
+- http://example.test/auth/password/reset
 - http://example.test/auth/register
 
-...
-and it continues like this following Laravel auth routes convention.
 
-To use web guard, all you have to do is add web.auth middleware to your Controller or Route Middleware.
+To use the ‘web’ guard, all you have to do is add web.auth middleware to your Controllers or Routes.
 
-Admin is another guard that can be used to protect your application.
+### Admin guard
+Admin is just an example guard that how you can add other guards.
 You can add as many guards as you want.
 
-Based on the default admin guard configuration, the use of it would look pretty much like this:
+Routes for the admin guard are as following:
 
-Routes:
-- http://example.test/panel/auth/login
-- http://example.test/panel/auth/register
-...
+- http://example.test/admin/auth/login
+- http://example.test/admin/auth/logout
+- http://example.test/admin/auth/password/email
+- http://example.test/admin/auth/password/reset
+- http://example.test/admin/auth/register
 
-Multiauth will set default guard  to 'admin' for all routes with 'panel' prefix.
 
-To use the admin guard, all you have to do is add admin.auth middleware to your Controller or Route Middleware.
+Multiauth will set default guard  to 'admin' for all routes with ‘admin’ prefix.
 
-If you want to see it in action, I've created a demo app.
+To use the admin guard, all you have to do is add admin.auth middleware to your Controllers or Routes
+
+## Multiauth Config
+
+The config contains a basic explanation on how to setup guards. The domain key in guards is basicly the identifier that will match against the first segment of the URI.
+So if the domain is set to 'admin' then all routes with the 'admin' prefix will load the 'admin' guard.
+
+```php
+
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Multiauth Guards
+    |--------------------------------------------------------------------------
+    | Here you can define guards for seperate segments / domains
+    */
+
+    'guards' => [
+
+        /*
+        |--------------------------------------------------------------------------
+        | Default Web Guard
+        |--------------------------------------------------------------------------
+        | This is the default web guard and is active for all routes except for
+        | the other guard routes you define.
+        |
+        */
+
+        'web' => [
+
+            /*
+            | Web guard domain should be empty.
+            */
+            'domain' => '',
+
+            /*
+            | Prefix for auth routes
+            | Example: http://example.test/auth
+            */
+            'prefix' => 'auth',
+            'refirect_after_login' => '/home',
+            'guard_driver' => 'session',
+            'provider_driver' => 'eloquent',
+            'user_model' => \Autoluminescent\Multiauth\User::class,
+            'password_reset_table' => 'password_resets',
+            'password_reset_expires' => 60,
+            'allow_registration' => true
+
+        ],
+
+        'admin' => [
+            'domain' => 'panel',
+            'prefix' => 'panel/auth',
+            'refirect_after_login' => '/panel',
+            'guard_driver' => 'session',
+            'provider_driver' => 'eloquent',
+            'user_model' => \Autoluminescent\Multiauth\User::class,
+            'password_reset_table' => 'password_resets',
+            'password_reset_expires' => 60,
+            'allow_registration' => false,
+            
+            // You can replace the layout and other blade views with your custom views.
+            'views' => [
+				'layout' => 'multiauth::layouts.auth',
+				'login' => 'multiauth::login',
+			],
+        ],
+
+    ],
+
+];
+
+
+```
+
+
+.
+
+I will setup a demo project soon...
+
 
