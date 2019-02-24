@@ -21,9 +21,6 @@ class ForgotPasswordController extends Controller
 
     use SendsPasswordResetEmails;
 
-
-    protected $currentGuard;
-
     /**
      * Create a new controller instance.
      *
@@ -31,9 +28,7 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->currentGuard = vega_auth()->guard()->name();
-
-        $this->middleware($this->currentGuard.'.guest');
+        $this->middleware(multiauth()->guestMiddleware());
     }
 
     /**
@@ -43,7 +38,7 @@ class ForgotPasswordController extends Controller
      */
     public function showLinkRequestForm()
     {
-        return view('multiauth::passwords.email');
+        return view(multiauth()->view('passwords.email'));
     }
 
     /**
@@ -53,7 +48,6 @@ class ForgotPasswordController extends Controller
      */
     public function broker()
     {
-        return Password::broker($this->currentGuard);
+        return Password::broker(multiauth()->broker());
     }
-
 }

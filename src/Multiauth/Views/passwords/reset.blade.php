@@ -1,4 +1,4 @@
-@extends(vega_auth()->guard()->view('layout'))
+@extends(multiauth()->view('layout'))
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('vega.auth.password.request') }}" aria-label="{{ __('Reset Password') }}">
+                    <form method="POST" action="{{ route('multiauth.password.request') }}" aria-label="{{ __('Reset Password') }}">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">

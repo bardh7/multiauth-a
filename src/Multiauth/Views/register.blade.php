@@ -1,4 +1,4 @@
-@extends(vega_auth()->guard()->view('layout'))
+@extends(multiauth()->view('layout'))
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('vega.auth.register') }}" aria-label="{{ __('Register') }}">
+                    <form method="POST" action="{{ route('multiauth.register') }}" aria-label="{{ __('Register') }}">
                         @csrf
 
                         <div class="form-group row">

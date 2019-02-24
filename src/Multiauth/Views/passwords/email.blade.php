@@ -1,4 +1,4 @@
-@extends(vega_auth()->guard()->view('layout'))
+@extends(multiauth()->view('layout'))
 
 @section('content')
 <div class="container">
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('vega.auth.password.email') }}" aria-label="{{ __('Reset Password') }}">
+                    <form method="POST" action="{{ route('multiauth.password.email') }}" aria-label="{{ __('Reset Password') }}">
                         @csrf
 
                         <div class="form-group row">

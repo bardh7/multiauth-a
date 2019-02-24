@@ -35,36 +35,26 @@ return [
             'refirect_after_login' => '/home',
             'guard_driver' => 'session',
             'provider_driver' => 'eloquent',
-            'provider_model' => \Autoluminescent\Multiauth\User::class,
+            'user_model' => \Autoluminescent\Multiauth\User::class,
             'password_reset_table' => 'password_resets',
             'password_reset_expires' => 60,
+            'allow_registration' => true
 
         ],
 
-        'vega' => [
+        'admin' => [
             'domain' => 'panel',
             'prefix' => 'panel/auth',
             'refirect_after_login' => '/panel',
             'guard_driver' => 'session',
             'provider_driver' => 'eloquent',
-            'provider_model' => \Autoluminescent\Multiauth\User::class,
+            'user_model' => \Autoluminescent\Multiauth\User::class,
             'password_reset_table' => 'password_resets',
             'password_reset_expires' => 60,
+            'allow_registration' => false,
             'views' => [
                 'layout' => 'multiauth::layouts.auth',
             ],
-        ],
-
-        'app' => [
-            'domain' => 'app',
-            'prefix' => 'app/auth',
-            'refirect_after_login' => '/app',
-            'guard_driver' => 'session',
-            'provider_driver' => 'eloquent',
-            'provider_model' => \Autoluminescent\Multiauth\User::class,
-            'password_reset_table' => 'password_resets',
-            'password_reset_expires' => 60,
-
         ],
 
     ],

@@ -37,9 +37,8 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->currentGuard = vega_auth()->guard()->name();
-        $this->redirectTo = vega_auth()->guard()->redirectAfterLogin();
-        $this->middleware($this->currentGuard.'.guest');
+        $this->redirectTo = multiauth()->redirectAfterLogin();
+        $this->middleware(multiauth()->guestMiddleware());
     }
 
     /**
@@ -53,7 +52,7 @@ class ResetPasswordController extends Controller
      */
     public function showResetForm(Request $request, $token = null)
     {
-        return view('multiauth::passwords.reset')->with(['token' => $token, 'email' => $request->email]);
+        return view(multiauth()->view('passwords.reset'))->with(['token' => $token, 'email' => $request->email]);
     }
 
     /**
@@ -63,7 +62,7 @@ class ResetPasswordController extends Controller
      */
     public function broker()
     {
-        return Password::broker($this->currentGuard);
+        return Password::broker(multiauth()->broker());
     }
 
     /**
@@ -73,6 +72,6 @@ class ResetPasswordController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard($this->currentGuard);
+        return Auth::guard(multiauth()->guard());
     }
 }

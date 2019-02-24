@@ -29,8 +29,6 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/panel';
 
-    protected $currentGuard;
-
     /**
      * Create a new controller instance.
      *
@@ -38,9 +36,8 @@ class LoginController extends Controller
      */
     public function __construct(Request $request)
     {
-        $this->currentGuard = vega_auth()->guard()->name();
-        $this->redirectTo = vega_auth()->guard()->redirectAfterLogin();
-        $this->middleware($this->currentGuard.'.guest', ['except' => 'logout']);
+        $this->redirectTo = multiauth()->redirectAfterLogin();
+        $this->middleware(multiauth()->guestMiddleware(), ['except' => 'logout']);
     }
 
     /**
@@ -50,7 +47,7 @@ class LoginController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard($this->currentGuard);
+        return Auth::guard(multiauth()->guard());
     }
 
     /**
@@ -60,7 +57,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view(vega_auth()->guard()->view('login'));
+        return view(multiauth()->view('login'));
     }
 
     /**

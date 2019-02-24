@@ -1,4 +1,4 @@
-@extends(vega_auth()->guard()->view('layout'))
+@extends(multiauth()->view('layout'))
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('vega.auth.login') }}" aria-label="{{ __('Login') }}">
+                    <form method="POST" action="{{ route('multiauth.login') }}" aria-label="{{ __('Login') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -57,7 +57,7 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('vega.auth.password.request') }}">
+                                <a class="btn btn-link" href="{{ route('multiauth.password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
                             </div>

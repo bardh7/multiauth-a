@@ -1,21 +1,22 @@
 <?php
 
-
-
-Route::prefix(vega_auth()->guard()->prefix())->group(function () {
+Route::prefix(multiauth()->prefix())->group(function () {
 
     // Login
-    Route::get('login', 'LoginController@showLoginForm')->name('vega.auth.login');
+    Route::get('login', 'LoginController@showLoginForm')->name('multiauth.login');
     Route::post('login', 'LoginController@login');
-    Route::post('logout', 'LoginController@logout')->name('vega.auth.logout');
+    Route::post('logout', 'LoginController@logout')->name('multiauth.logout');
 
     // Register
-    Route::get('register', 'RegisterController@showRegistrationForm')->name('vega.auth.register');
-    Route::post('register', 'RegisterController@register');
+    if (multiauth()->allowRgistration()) {
+        Route::get('register', 'RegisterController@showRegistrationForm')->name('multiauth.register');
+        Route::post('register', 'RegisterController@register');
+    }
 
     // Passwords
-    Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('vega.auth.password.email');
+    Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('multiauth.password.email');
     Route::post('password/reset', 'ResetPasswordController@reset');
-    Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('vega.auth.password.request');
-    Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('vega.auth.password.reset');
+    Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('multiauth.password.request');
+    Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('multiauth.password.reset');
+
 });

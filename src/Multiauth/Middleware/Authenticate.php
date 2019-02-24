@@ -5,7 +5,7 @@ namespace Autoluminescent\Multiauth\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class VegaAuth
+class Authenticate
 {
     /**
      * Handle an incoming request.
@@ -17,20 +17,12 @@ class VegaAuth
      */
     public function handle($request, Closure $next)
     {
-        $redirect = '';
-
-
-        $redirect = vega_auth()->guard()->prefix();
-        $currentGuard = vega_auth()->guard()->name();
-        
-
+        $currentGuard = multiauth()->guard();
         auth()->setDefaultDriver($currentGuard);
 
-
         if (! Auth::check()) {
-            return redirect($redirect.'/login');
+            return redirect(multiauth()->prefix().'/login');
         }
-
 
         return $next($request);
     }
