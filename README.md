@@ -24,8 +24,8 @@ The web guard is a default guard and should be not removed, bacause it servers a
 It is prety much like Laravels default auth guard.
 Default web auth routes are as following:
 
-http://example.test/auth/login
-http://example.test/auth/register
+- http://example.test/auth/login
+- http://example.test/auth/register
 
 ...
 and it continues like this following Laravel auth routes convention.
@@ -38,8 +38,8 @@ You can add as many guards as you want.
 Based on the default admin guard configuration, the use of it would look pretty much like this:
 
 Routes:
-http://example.test/panel/auth/login
-http://example.test/panel/auth/register
+- http://example.test/panel/auth/login
+- http://example.test/panel/auth/register
 ...
 
 Multiauth will set default guard  to 'admin' for all routes with 'panel' prefix.
