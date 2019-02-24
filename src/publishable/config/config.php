@@ -43,9 +43,9 @@ return [
         ],
 
         'admin' => [
-            'domain' => 'panel',
-            'prefix' => 'panel/auth',
-            'refirect_after_login' => '/panel',
+            'domain' => 'admin',
+            'prefix' => 'admin/auth',
+            'refirect_after_login' => '/admin',
             'guard_driver' => 'session',
             'provider_driver' => 'eloquent',
             'user_model' => \Autoluminescent\Multiauth\User::class,
